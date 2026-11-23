@@ -1,0 +1,39 @@
+{
+  "name": "itmosoft/laravel-money",
+  "description": "Shared monetary value, precision and rounding services for ITMOSOFT Laravel packages.",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^8.3",
+    "brick/money": "^0.15.2",
+    "brick/math": "^1.0",
+    "illuminate/contracts": "^12.0 || ^13.0",
+    "illuminate/support": "^12.0 || ^13.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^10.0 || ^11.0",
+    "phpunit/phpunit": "^11.0 || ^12.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ItmoSoft\\Money\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ItmoSoft\\Money\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ItmoSoft\\Money\\MoneyServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

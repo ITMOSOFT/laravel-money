@@ -1,0 +1,44 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php }} / Laravel ${{ matrix.laravel }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: '8.3'
+            laravel: '12'
+            illuminate: '^12.0'
+            testbench: '^10.0'
+            phpunit: '^11.0'
+          - php: '8.3'
+            laravel: '13'
+            illuminate: '^13.0'
+            testbench: '^11.0'
+            phpunit: '^12.0'
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, dom, xml
+          coverage: none
+      - name: Select Laravel test dependencies
+        run: |
+          composer require --no-update "illuminate/support:${{ matrix.illuminate }}" "illuminate/contracts:${{ matrix.illuminate }}"
+          composer require --dev --no-update "orchestra/testbench:${{ matrix.testbench }}" "phpunit/phpunit:${{ matrix.phpunit }}"
+      - name: Install dependencies
+        run: composer update --with-all-dependencies --prefer-dist --no-interaction
+      - name: Validate Composer
+        run: composer validate --no-check-publish
+      - name: Run tests
+        run: composer test
