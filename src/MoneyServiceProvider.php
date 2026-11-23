@@ -51,7 +51,6 @@ final class MoneyServiceProvider extends ServiceProvider
             'HALF_UP' => RoundingMode::HalfUp,
             'HALF_DOWN' => RoundingMode::HalfDown,
             'HALF_EVEN' => RoundingMode::HalfEven,
-            'HALF_ODD' => RoundingMode::HalfOdd,
             'UNNECESSARY' => RoundingMode::Unnecessary,
             default => throw new InvalidArgumentException("Unsupported money rounding mode [{$mode}]."),
         };

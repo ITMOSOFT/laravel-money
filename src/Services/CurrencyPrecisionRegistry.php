@@ -57,7 +57,7 @@ final class CurrencyPrecisionRegistry
 
         if (isset($this->customCurrencies[$code])) {
             $definition = $this->customCurrencies[$code];
-            return new Currency($code, $definition['numeric_code'], $definition['name'], $definition['scale']);
+            return new Currency($code, (int) ($definition['numeric_code'] ?? 0), $definition['name'], $definition['scale']);
         }
 
         return Currency::of($code);

@@ -60,7 +60,12 @@ final class MoneyManager
         $scale ??= $this->currencies->precision($currency);
         $this->assertScale($scale);
 
-        return $amount->toContext(new CustomContext($scale), $roundingMode ?? $this->roundingMode);
+        return Money::of(
+            $amount->getAmount(),
+            $amount->getCurrency(),
+            new CustomContext($scale),
+            $roundingMode ?? $this->roundingMode,
+        );
     }
 
     public function percentage(

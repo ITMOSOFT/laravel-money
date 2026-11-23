@@ -2,13 +2,14 @@
 
 Shared monetary value, precision and rounding services for ITMOSOFT Laravel packages.
 
-This package provides a consistent Laravel-facing entry point over [Brick Money](https://github.com/brick/money), avoiding separate monetary arithmetic and currency precision policies in each commerce package.
+This package provides a consistent Laravel-facing entry point over [Brick Money](https://github.com/brick/money), avoiding separate monetary arithmetic and currency precision policies in each commerce package. The Brick Money 0.11 line is used with Brick Math 0.14.x to keep the dependency graph compatible with Laravel 12 and 13.
 
 ## Requirements
 
 - PHP 8.3+
 - Laravel 12 or 13
-- `brick/money` ^0.15.2
+- `brick/money` ^0.11.2
+- `brick/math` ^0.14.4
 
 ## Installation
 
@@ -83,7 +84,7 @@ $total = $manager->sum([
 
 ## Rounding
 
-Default rounding is `HALF_UP`. Supported config values: `UP`, `DOWN`, `CEILING`, `FLOOR`, `HALF_UP`, `HALF_DOWN`, `HALF_EVEN`, `HALF_ODD`, `UNNECESSARY`.
+Default rounding is `HALF_UP`. Supported config values: `UP`, `DOWN`, `CEILING`, `FLOOR`, `HALF_UP`, `HALF_DOWN`, `HALF_EVEN`, `UNNECESSARY`.
 
 A call can override the configured mode:
 

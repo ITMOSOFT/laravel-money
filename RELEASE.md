@@ -1,56 +1,57 @@
 # Repository and release instructions
 
-## Suggested repository
+## Repository
 - Name: `ITMOSOFT/laravel-money`
 - Description: `Shared monetary value, precision and rounding services for ITMOSOFT Laravel packages.`
 
 ## Validate locally
+Run from the package root:
+
 ```bash
 composer validate --no-check-publish
+composer update --with-all-dependencies --prefer-dist
 composer test
 ```
 
-## User-run initial commit and push
+The GitHub Actions matrix must pass for both PHP 8.3 / Laravel 12 and PHP 8.3 / Laravel 13 before releasing.
+
+## Patch release 1.0.1
+This patch resolves the Brick Money / Brick Math dependency conflict that prevented Laravel 12 from installing the package. Do not modify or recreate the existing `v1.0.0` tag.
+
+Suggested commit message: `fix: support Laravel 12 Brick Math constraints`
+
+User-run commands:
+
 ```bash
-git add .
-git commit -m "feat: create shared Laravel money package"
-git branch -M main
-git remote add origin git@github.com:ITMOSOFT/laravel-money.git
-git push -u origin main
-```
-If the remote already exists, do not add it again.
-
-## User-run tag (only after CI passes)
-```bash
-git tag -a v0.1.0 -m "Release v0.1.0"
-git push origin v0.1.0
+git add composer.json README.md CHANGELOG.md RELEASE.md src/MoneyServiceProvider.php src/Services/MoneyManager.php src/Services/CurrencyPrecisionRegistry.php
+git commit -m "fix: support Laravel 12 Brick Math constraints"
+git push origin main
+git tag -a v1.0.1 -m "Release v1.0.1"
+git push origin v1.0.1
 ```
 
-## GitHub Release
-Title: `v0.1.0 – Initial Shared Money Package`
+GitHub Release title: `v1.0.1 – Laravel 12 dependency compatibility`
 
-Suggested notes:
+Suggested release notes:
+
 ```markdown
-## What's Included
-- Shared Laravel MoneyManager backed by Brick Money.
-- ISO currency fraction digits with configurable overrides.
-- Exact rational intermediate calculations and explicit settlement.
-- Minor-unit creation, percentage calculations and currency-safe sums.
-- Laravel 12 and 13 support.
+## Fixed
+- Resolve the Brick Money / Brick Math dependency conflict in Laravel 12.
+- Keep Laravel 12 and 13 compatibility with Brick Money 0.11.2 and Brick Math 0.14.x.
+- Make settlement and custom currency construction compatible with the selected Brick Money API.
+- Remove HALF_ODD from the supported rounding configuration because Brick Math 0.14.x does not provide that enum case.
 
 ## Requirements
 - PHP 8.3+
 - Laravel 12 or 13
 
-## Installation
-composer require itmosoft/laravel-money
+## Upgrade
+```bash
+composer update itmosoft/laravel-money --with-all-dependencies
+```
 ```
 
 ## Packagist
-1. Create/import `ITMOSOFT/laravel-money` on GitHub.
-2. Submit the repository URL to Packagist.
-3. Enable the Packagist GitHub webhook.
-4. After pushing `v0.1.0`, confirm Packagist exposes the release.
-5. Install in clean Laravel 12 and Laravel 13 applications.
+After pushing the tag, confirm Packagist exposes `1.0.1`, then test installation in clean Laravel 12 and Laravel 13 applications.
 
-No GitHub or Packagist action is performed by this generation step.
+No GitHub or Packagist action is performed by this package preparation.
